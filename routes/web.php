@@ -206,10 +206,59 @@ Route::get('taocot',function(){
     });
 });
 
+
+
 Route::get('lienket',function(){
    $data= App\SanPham::find(3)->loaisanpham->toArray();
    
-   if($data==null){
-       echo "hellow";
-   }
+   dd($data);
 });
+
+Route::get('doitencot',function(){
+    Schema::table('sanpham',function($table){
+        $table->renameColumn('id_loaianpham','id_loaisanpham');
+    });
+});
+
+Route::get('lienketloaisanpham',function(){
+    $data= App\LoaiSanPham::find(2)->sanpham->toArray();
+    
+    dd($data);
+ });
+
+ // URL
+ Route::get('MyRequest','MyController@GetURL');
+
+ //Gui nhan du lieu voi request
+ Route::get('getForm',function(){
+     return view('postForm');
+ });
+
+ Route::post('postForm',['as' => 'postForm','uses' => 'MyController@postForm']);
+
+ //Cookie
+ Route::get('setCookie','MyController@setCookie');
+ Route::get('getCookie','MyController@getCookie');
+
+ //Upload file
+ Route::get('uploadFile',function(){
+    return view('postFile');
+ });
+
+ Route::post('postFile',['as' => 'postFile','uses' => 'MyController@postFile']);
+
+
+ //Json
+ Route::get('getJson','MyController@getJson');
+
+ Route::get('diem',function(){
+    echo "Bạn đã có điểm";
+ })->middleware('MyMiddle')->name('diem');
+
+ Route::get('loi',function(){
+    echo "Bạn chưa có điểm";  
+ })->name('loi');
+
+ Route::get('nhapdiem',function(){
+    return view('nhapdiem');
+ })->name('nhapdiem');

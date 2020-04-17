@@ -8,4 +8,8 @@ class LoaiSanPham extends Model
 {
     protected $table = "loaisanpham";
     public $timestamps = false;
+
+    public function sanpham(){
+        return $this->hasMany('App\Sanpham','id_loaisanpham','id');
+    }
 }
